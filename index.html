@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <title>LitBuy spreadsheet – kategorier, mått och QC-bilder</title>
+  <meta name="description" content="Svensk guide till LitBuy spreadsheet. Hitta rätt kategori, granska produktlänkar och QC-bilder, jämför mått och räkna på frakt till Sverige.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="sv_SE">
+  <meta property="og:title" content="LitBuy spreadsheet – kategorier, mått och QC-bilder">
+  <meta property="og:description" content="Från produktlänk till paket. Jämför storlek, kontrollbilder och leveranskostnad med en svensk inköpsguide.">
+  <meta property="og:image" content="https://www.nike.ae/dw/image/v2/BDVB_PRD/on/demandware.static/-/Sites-akeneo-master-catalog/default/dwb156baa0/nk/f36/b/b/a/c/a/f36bbaca_9cc5_40ab_b6fc_68d3ad0e76a2.jpg?sw=720">
+  <meta property="og:image:alt" content="Grönvit Nike Dunk Low Retro från sidan">
+  <link rel="preconnect" href="https://www.nike.ae">
+  <link rel="icon" href="https://www.cafans.com/favicon.ico">
+  <!--
+    index.html
+    Google-sökning: LitBuy spreadsheet. Google visade en JavaScript-spärr.
+    Förstasidans placeringar kunde därför inte bekräftas. Tio relevanta sidor
+    från den alternativa webbsökningen granskades för titel och innehåll:
+    litbuyex.com (kategorier och mode), litbuys.store (kostnad och QC),
+    litbuy.wtf/en (sökning och lagerkontroll), litbuy.asia (produktkategorier),
+    litbuybestspreadsheet.com (kalkylblad och produktfynd),
+    litbuyspreadsheet.page/about/ (guide och avsändare),
+    lit-buy-spreadsheet.com (produktlänkar och urval),
+    findhaul.com/finds/litbuy (säljarlänkar och frakt),
+    litbuyplus.com (produktvarianter och QC), litbuy-spreadsheets.com (SKU och lager).
+    Sekundära sökfraser: LitBuy produktlänkar, LitBuy storleksguide,
+    LitBuy QC-bilder, LitBuy frakt till Sverige.
+    32 ämnen för längre sökfraser: ursprunglig säljarlänk, utgången produktlänk,
+    produkt-ID, säljarens namn, färgkod, aktuellt lagersaldo för vald storlek,
+    variantval, storlekstabell i centimeter, innersulans längd, sulans bredd,
+    bröstvidd plant, axelbredd, ärmlängd, utrymme för mellanlager, benlängd,
+    midjevidd, huvudomkrets, justerbart spänne, armbandets invändiga omkrets,
+    närbild på lås, lagerbilder för kvalitetskontroll, säljarens produktbilder,
+    bild på yttersula, måttband på lagerbild, sömmar, artikelnummer på etiketten,
+    returfrist på lagret, inrikesfrakt, paketmått, volymvikt,
+    fraktoffert till svenskt postnummer, valutaväxling till kronor.
+  -->
+  <style>
+    :root{color-scheme:light;--papper:#f6f1e8;--kort:#fffcf6;--text:#271c19;--ton:#594943;--linje:#d9cbbd;--vin:#652b38;--mork:#45202b}
+    *,*::before,*::after{box-sizing:border-box}
+    body{margin:0;background:var(--papper);color:var(--text);font:1rem/1.62 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{color:var(--vin);text-underline-offset:.2em}
+    :focus-visible{outline:3px solid #285e69;outline-offset:4px}
+    h1,h2,h3,p,figure{margin:0}
+    h1,h2{font-family:Georgia,"Times New Roman",serif;line-height:1.04;letter-spacing:-.035em;text-wrap:balance}
+    h1{font-size:clamp(2.75rem,6vw,5.25rem);margin:.34em 0}
+    h2{font-size:clamp(2rem,3.8vw,3.15rem);margin-bottom:.55em}
+    h3{font-size:1.2rem;line-height:1.3;margin-bottom:.55rem}
+    img{display:block;width:100%;height:auto}
+    .ram{width:min(100% - 2rem,71rem);margin-inline:auto}
+    .topp{border-bottom:1px solid var(--linje)}
+    .rad{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:4rem}
+    .marke{font-weight:800;text-decoration:none}
+    .etikett{font-size:.73rem;font-weight:760;letter-spacing:.13em;text-transform:uppercase;color:var(--vin)}
+    .intro{display:grid;grid-template-columns:1.35fr 1fr;align-items:center;gap:clamp(1.5rem,5vw,5rem);padding-block:clamp(2rem,5vw,4rem)}
+    .intro p:not(.etikett){max-width:54ch}
+    .knapp{display:inline-block;padding:.7rem 1.15rem;background:var(--vin);color:#fff;text-decoration:none;font-weight:720;margin-top:1.1rem;border-radius:.25rem}
+    .knapp:hover{background:var(--mork)}
+    .huvudbild{border:1px solid var(--linje);background:#f2f2f2}
+    .huvudbild img{aspect-ratio:16/10;object-fit:cover;object-position:center 65%}
+    figcaption{padding:.55rem .8rem;background:var(--kort);color:var(--ton);font-size:.85rem}
+    .band{padding:1.35rem 0 1.65rem;border-block:1px solid var(--linje);background:#eee3d6}
+    .band h2{font-size:clamp(1.8rem,3vw,2.45rem)}
+    .kategorier{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.5rem;list-style:none;margin:0;padding:0}
+    .kategorier a{display:flex;align-items:center;justify-content:space-between;gap:.4rem;height:100%;min-height:2.8rem;padding:.5rem .7rem;background:var(--kort);border:1px solid var(--linje);border-radius:.25rem;font-size:.91rem;font-weight:710;text-decoration:none}
+    .kategorier a:hover{border-color:var(--vin);text-decoration:underline}
+    .sektion{padding-block:clamp(2.4rem,5vw,4rem)}
+    .sektion+.sektion{border-top:1px solid var(--linje)}
+    .beskrivning{max-width:66ch;margin-bottom:1.15rem;color:var(--ton)}
+    .artiklar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.85rem}
+    .artiklar article{background:var(--kort);padding:1.1rem 1.2rem;border-top:3px solid var(--vin)}
+    .artiklar p+p{margin-top:.75rem}
+    .nummer{display:block;color:var(--vin);font-weight:800;font-size:.8rem;margin-bottom:.65rem}
+    .bilder{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.8rem}
+    .bilder figure{border:1px solid var(--linje);background:var(--kort)}
+    .bilder img{aspect-ratio:1;object-fit:contain;background:#f2f2f2}
+    .faq{max-width:50rem}
+    details{border-top:1px solid var(--linje);padding:.72rem 0}
+    details:last-child{border-bottom:1px solid var(--linje)}
+    summary{cursor:pointer;font-weight:730;min-height:1.6rem}
+    details p{margin:.4rem 0 .25rem;color:var(--ton)}
+    footer{padding:1.35rem 0;background:var(--mork);color:#fff6eb}
+    footer a{color:inherit;font-weight:760}
+    footer p{margin-top:.4rem;font-size:.91rem}
+    footer :focus-visible{outline-color:#ffdfa9}
+    @media(max-width:54rem){.kategorier{grid-template-columns:repeat(3,minmax(0,1fr))}.artiklar{grid-template-columns:1fr}}
+    @media(max-width:40rem){.intro{grid-template-columns:1fr}.kategorier,.bilder{grid-template-columns:repeat(2,minmax(0,1fr))}.topp .etikett{letter-spacing:.07em}.huvudbild img{aspect-ratio:2/1}}
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"WebPage",
+        "inLanguage":"sv",
+        "name":"LitBuy spreadsheet – kategorier, mått och QC-bilder",
+        "description":"Svensk guide till LitBuy spreadsheet. Hitta rätt kategori, granska produktlänkar och QC-bilder, jämför mått och räkna på frakt till Sverige."
+      },
+      {
+        "@type":"FAQPage",
+        "inLanguage":"sv",
+        "name":"Vanliga frågor",
+        "mainEntity":[
+          {"@type":"Question","name":"Vad är ett LitBuy spreadsheet?","acceptedAnswer":{"@type":"Answer","text":"Det är ett kalkylblad eller en webblista med produktlänkar, ofta ordnade efter kategori. Den här guiden förklarar hur du bedömer länkarna och leder till Cafans kategorier."}},
+          {"@type":"Question","name":"Vad gör jag om en produktlänk har gått ut?","acceptedAnswer":{"@type":"Answer","text":"Sök på produkt-ID eller säljarens namn. Jämför modell, färgkod och variant innan du sparar en ny länk."}},
+          {"@type":"Question","name":"Hur jämför jag storlekar i praktiken?","acceptedAnswer":{"@type":"Answer","text":"Mät ett plagg eller en sko som passar dig. Jämför samma måttpunkter i centimeter och kontrollera om tabellen visar kroppsmått eller produktmått."}},
+          {"@type":"Question","name":"Visar QC-bilder om en märkesvara är äkta?","acceptedAnswer":{"@type":"Answer","text":"QC-bilder visar synliga detaljer och skick. För att bedöma äkthet behöver du även underlag om ursprung och säljare."}},
+          {"@type":"Question","name":"Vad ingår i en uppskattning av frakt till Sverige?","acceptedAnswer":{"@type":"Answer","text":"Be om en fraktoffert för paketets vikt, yttermått och ditt postnummer. Lägg till varans pris, övriga avgifter och valutaväxling för att uppskatta totalsumman i kronor."}}
+        ]
+      }
+    ]
+  }
+  </script>
+<link rel="canonical" href="https://kakobuyfinds.github.io/sjtcw/">
+</head>
+<body>
+  <header class="topp">
+    <div class="ram rad">
+      <a class="marke" href="https://www.cafans.com">www.cafans.com</a>
+      <span class="etikett">Svensk inköpsguide</span>
+    </div>
+  </header>
+  <main>
+    <section class="ram intro" aria-labelledby="sidtitel">
+      <div>
+        <p class="etikett">Passform · Kontrollbilder · Leverans</p>
+        <h1 id="sidtitel">LitBuy spreadsheet</h1>
+        <p>Ett LitBuy spreadsheet är en produktlista som hjälper dig hitta länkar. Börja i en kategori och jämför sedan den valda varianten, måtten och den beräknade kostnaden för hela beställningen. Kategorierna nedan öppnas hos Cafans.</p>
+        <a class="knapp" href="https://www.cafans.com">Öppna Cafans katalog</a>
+      </div>
+      <figure class="huvudbild">
+        <img src="https://www.nike.ae/dw/image/v2/BDVB_PRD/on/demandware.static/-/Sites-akeneo-master-catalog/default/dwb156baa0/nk/f36/b/b/a/c/a/f36bbaca_9cc5_40ab_b6fc_68d3ad0e76a2.jpg?sw=720" width="720" height="720" fetchpriority="high" loading="eager" alt="Grönvit Nike Dunk Low Retro från sidan">
+        <figcaption>Bildreferens · Nike Dunk Low Retro</figcaption>
+      </figure>
+    </section>
+    <nav class="band" aria-labelledby="kategorititel">
+      <div class="ram">
+        <h2 id="kategorititel">Välj en kategori</h2>
+        <ul class="kategorier">
+          <li><a href="https://cafans.com/category-911-Shoes.html">Skor <span aria-hidden="true">↗</span></a></li>
+          <li><a href="https://cafans.com/category-912-Hoodies%2FSweaters.html">Huvtröjor och tröjor <span aria-hidden="true">↗</span></a></li>
+          <li><a href="https://cafans.com/category-913-T-Shirts.html">T-shirts <span aria-hidden="true">↗</span></a></li>
+          <li><a href="https://cafans.com/category-914-Jackets.html">Jackor <span aria-hidden="true">↗</span></a></li>
+          <li><a href="https://cafans.com/category-915-Pants%2FShorts.html">Byxor och shorts <span aria-hidden="true">↗</span></a></li>
+          <li><a href="https://cafans.com/category-916-Headwear.html">Huvudbonader <span aria-hidden="true">↗</span></a></li>
+          <li><a href="https://cafans.com/category-917-Sets.html">Klädset <span aria-hidden="true">↗</span></a></li>
+          <li><a href="https://cafans.com/category-918-underwear%2Funderpants.html">Underkläder <span aria-hidden="true">↗</span></a></li>
+          <li><a href="https://cafans.com/category-919-Jersey.html">Matchtröjor <span aria-hidden="true">↗</span></a></li>
+          <li><a href="https://cafans.com/category-920-Accessories.html">Accessoarer <span aria-hidden="true">↗</span></a></li>
+        </ul>
+      </div>
+    </nav>
+    <section class="ram sektion" aria-labelledby="checktitel">
+      <h2 id="checktitel">Tre kontroller före beställning</h2>
+      <p class="beskrivning">Spara produkt-ID, vald variant och dagens måttuppgifter på samma rad. Då kan du gå tillbaka och jämföra om annonsen ändras.</p>
+      <div class="artiklar">
+        <article>
+          <span class="nummer" aria-hidden="true">01 / Länk och mått</span>
+          <h3>Produktlänkar och storleksguide för LitBuy</h3>
+          <p>Öppna den ursprungliga säljarlänken och kontrollera färgkod, variantval och lagersaldo för din storlek. Om produktlänken har gått ut kan du söka på produkt-ID eller säljarens namn.</p>
+          <p>Jämför storlekstabellen i centimeter med något du redan använder. Mät innersulans längd och bredd för skor, bröstvidden plant och axelbredden för tröjor samt midjevidd och benlängd för byxor. Mät jackans ärmlängd med utrymme för ett mellanlager.</p>
+        </article>
+        <article>
+          <span class="nummer" aria-hidden="true">02 / Lagerbilder</span>
+          <h3>Så läser du QC-bilder för LitBuy</h3>
+          <p>QC står för kvalitetskontroll. Säljarens produktbilder visar hur en modell presenteras. Be om lagerbilder av exemplaret som ska skickas och jämför artikelnumret på etiketten med din orderrad.</p>
+          <p>Be om en bild av yttersulan för skor, en närbild av sömmarna för plagg och ett synligt måttband när passformen är avgörande. Om du hittar en avvikelse, kontrollera returfristen på lagret innan paketet skickas.</p>
+        </article>
+        <article>
+          <span class="nummer" aria-hidden="true">03 / Leverans</span>
+          <h3>Räkna på LitBuy-frakt till Sverige</h3>
+          <p>Separera varans pris, inrikesfrakt och eventuell hanteringsavgift. Be om en fraktoffert till ditt svenska postnummer och kontrollera vilken vikt transportören använder som grund för priset.</p>
+          <p>Jämför paketmått och volymvikt om skokartongen gör paketet större. Kontrollera vilka avgifter offerten täcker och räkna om totalsumman till kronor med samma växelkurs när du jämför alternativ.</p>
+        </article>
+      </div>
+    </section>
+    <section class="ram sektion" aria-labelledby="bildtitel">
+      <h2 id="bildtitel">Detaljer att be om på bild</h2>
+      <p class="beskrivning">Bildreferenserna visar vilka detaljer du kan granska. Jämför alltid med bilder av exemplaret i annonsen eller på lagret.</p>
+      <div class="bilder">
+        <figure>
+          <img src="https://assets.christiandior.com/is/image/diorprod/683C212A1087C540_SBG_E01-2?wid=420&amp;fmt=webp&amp;qlt=75" width="420" height="525" loading="lazy" decoding="async" alt="Mörkblå Diorjacka med dragkedja på en galge">
+          <figcaption><strong>Dior · Jacka</strong><br>Be om bilder på dragkedja och ärmslut.</figcaption>
+        </figure>
+        <figure>
+          <img src="https://la.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-vers-mesh-cap--M5474L_PM1_Look%20view.jpg?wid=400" width="490" height="613" loading="lazy" decoding="async" alt="Person i svart outfit med ljus Louis Vuitton-keps">
+          <figcaption><strong>Louis Vuitton · Keps</strong><br>Mät huvudomkretsen och kontrollera spännets justerområde.</figcaption>
+        </figure>
+        <figure>
+          <img src="https://media.gucci.com/style/DarkGray_Center_0_0_1200x1200/1718385429/797432_J1691_1012_001_100_0000_Light-Square-frame-sunglasses.jpg" width="1200" height="1200" loading="lazy" decoding="async" alt="Svarta fyrkantiga Gucci-solglasögon sedda framifrån">
+          <figcaption><strong>Gucci · Solglasögon</strong><br>Jämför bågbredd och be om bilder på gångjärnen.</figcaption>
+        </figure>
+        <figure>
+          <img src="https://www.crepslocker.com/cdn/shop/files/hermes-paris-clic-h-black-bracelet-h700001fv01pm-front.webp?v=1716898801&amp;width=420" width="420" height="420" loading="lazy" decoding="async" alt="Svart Hermès Clic H-armband med guldfärgat H-lås">
+          <figcaption><strong>Hermès · Armband</strong><br>Kontrollera invändig omkrets och be om en närbild av låset.</figcaption>
+        </figure>
+      </div>
+    </section>
+    <section class="ram sektion" aria-labelledby="faqtitel">
+      <h2 id="faqtitel">Vanliga frågor</h2>
+      <div class="faq">
+        <details open>
+          <summary>Vad är ett LitBuy spreadsheet?</summary>
+          <p>Det är ett kalkylblad eller en webblista med produktlänkar, ofta ordnade efter kategori. Den här guiden förklarar hur du bedömer länkarna och leder till Cafans kategorier.</p>
+        </details>
+        <details>
+          <summary>Vad gör jag om en produktlänk har gått ut?</summary>
+          <p>Sök på produkt-ID eller säljarens namn. Jämför modell, färgkod och variant innan du sparar en ny länk.</p>
+        </details>
+        <details>
+          <summary>Hur jämför jag storlekar i praktiken?</summary>
+          <p>Mät ett plagg eller en sko som passar dig. Jämför samma måttpunkter i centimeter och kontrollera om tabellen visar kroppsmått eller produktmått.</p>
+        </details>
+        <details>
+          <summary>Visar QC-bilder om en märkesvara är äkta?</summary>
+          <p>QC-bilder visar synliga detaljer och skick. För att bedöma äkthet behöver du även underlag om ursprung och säljare.</p>
+        </details>
+        <details>
+          <summary>Vad ingår i en uppskattning av frakt till Sverige?</summary>
+          <p>Be om en fraktoffert för paketets vikt, yttermått och ditt postnummer. Lägg till varans pris, övriga avgifter och valutaväxling för att uppskatta totalsumman i kronor.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="ram">
+      <a href="https://www.cafans.com">www.cafans.com</a>
+      <p>Fristående inköpsguide. Varumärkesbilderna används som exempel på form och detaljer.</p>
+    </div>
+  </footer>
+</body>
+</html>
